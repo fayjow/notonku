@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) }" x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))" :class="{ 'dark': darkMode }">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="RVOBcjQRFArSSDp8QEhIKEFCw2HV4xfiqMjPlUrA">
+
+    <title>Watch Tempore magni corrupti. - NontonKu</title>
+    <meta name="description" content="NontonKu is a modern platform to watch your favorite movies, series, anime, and donghua.">
+    
+    
+    <!-- Open Graph placeholder -->
+    <meta property="og:site_name" content="NontonKu">
+    <meta property="og:title" content="Watch Tempore magni corrupti. - NontonKu">
+    <meta property="og:description" content="NontonKu is a modern platform to watch your favorite movies, series, anime, and donghua.">
+    <meta property="og:type" content="website">
+    
+    
+    <!-- Prevent FOUC -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <script type="module" src="http://[::1]:5173/@vite/client"></script><link rel="stylesheet" href="http://[::1]:5173/resources/css/app.css" /><script type="module" src="http://[::1]:5173/resources/js/app.js"></script></head>
+<body class="font-sans antialiased bg-gray-50 text-gray-900 dark:bg-zinc-950 dark:text-zinc-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white motion-reduce:transition-none motion-reduce:transform-none">
+    
+    <nav x-data="{ open: false }" class="bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <!-- Logo -->
+                <a href="http://localhost:8000" class="flex-shrink-0 flex items-center font-bold text-xl tracking-tight text-indigo-600 dark:text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded px-1">
+                    NontonKu
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden sm:-my-px sm:ml-8 sm:flex sm:space-x-8">
+                    <a href="http://localhost:8000" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 border-transparent text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:border-gray-300 dark:hover:border-zinc-600">Home</a>
+                    <a href="http://localhost:8000/movies" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 border-transparent text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:border-gray-300 dark:hover:border-zinc-600">Movies</a>
+                    <a href="http://localhost:8000/series" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 border-transparent text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:border-gray-300 dark:hover:border-zinc-600">Series</a>
+                    <a href="http://localhost:8000/anime" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 border-transparent text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:border-gray-300 dark:hover:border-zinc-600">Anime</a>
+                    <a href="http://localhost:8000/donghua" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 border-transparent text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:border-gray-300 dark:hover:border-zinc-600">Donghua</a>
+                </div>
+            </div>
+
+            <div class="hidden sm:flex sm:items-center sm:space-x-4">
+                <!-- Search Form -->
+                <form action="http://localhost:8000/search" method="GET" class="relative text-gray-400 focus-within:text-gray-600 dark:focus-within:text-zinc-300">
+                    <button type="submit" class="absolute inset-y-0 left-0 flex items-center pl-3 hover:text-indigo-500 focus:outline-none">
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <input type="text" name="q" value="" class="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-zinc-700 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:bg-zinc-800 sm:text-sm sm:leading-6" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <!-- Dark Mode Toggle -->
+                <button @click="darkMode = !darkMode" type="button" aria-label="Toggle Dark Mode" class="text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg text-sm p-2 transition-colors">
+                    <svg x-show="!darkMode" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg x-cloak x-show="darkMode" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 4.22a1 1 0 011.415 0l.708.708a1 1 0 01-1.414 1.414l-.708-.708a1 1 0 010-1.415zm3.78 3.78a1 1 0 010 1.414v1a1 1 0 11-1.414 0v-1a1 1 0 011.414-1.414zM10 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-4.22a1 1 0 010 1.415l-.708.708a1 1 0 11-1.414-1.414l.708-.708a1 1 0 011.414 0zM3 10a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zM5.78 5.78a1 1 0 010-1.414l.708-.708a1 1 0 111.414 1.414l-.708.708a1 1 0 01-1.414 0zM10 6a4 4 0 100 8 4 4 0 000-8z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
+
+                <!-- Auth Links -->
+                                    <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+    <div @click="open = ! open">
+        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-zinc-400 bg-white dark:bg-zinc-800 hover:text-gray-700 dark:hover:text-zinc-200 focus:outline-none transition ease-in-out duration-150">
+                                <div>Jo Windler</div>
+                                <div class="ms-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+    </div>
+
+    <div x-show="open"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+            class="absolute z-50 mt-2 w-48 rounded-md shadow-lg ltr:origin-top-right rtl:origin-top-left end-0"
+            style="display: none;"
+            @click="open = false">
+        <div class="rounded-md ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-gray-700">
+            <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="http://localhost:8000/profile">Profile</a>
+                            <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="http://localhost:8000/favorites">Favorites</a>
+                            <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="http://localhost:8000/watchlist">Watchlist</a>
+                            <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="http://localhost:8000/history">History</a>
+                            <form method="POST" action="http://localhost:8000/logout">
+                                <input type="hidden" name="_token" value="RVOBcjQRFArSSDp8QEhIKEFCw2HV4xfiqMjPlUrA" autocomplete="off">                                <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="http://localhost:8000/logout" onclick="event.preventDefault(); this.closest('form').submit();">Log Out</a>
+                            </form>
+        </div>
+    </div>
+</div>
+                            </div>
+
+            <!-- Mobile menu button -->
+            <div class="-mr-2 flex items-center sm:hidden space-x-2">
+                <!-- Mobile Dark Mode Toggle -->
+                <button @click="darkMode = !darkMode" type="button" aria-label="Toggle Dark Mode" class="text-gray-500 dark:text-zinc-400 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg">
+                    <svg x-show="!darkMode" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg x-cloak x-show="darkMode" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 4.22a1 1 0 011.415 0l.708.708a1 1 0 01-1.414 1.414l-.708-.708a1 1 0 010-1.415zm3.78 3.78a1 1 0 010 1.414v1a1 1 0 11-1.414 0v-1a1 1 0 011.414-1.414zM10 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-4.22a1 1 0 010 1.415l-.708.708a1 1 0 11-1.414-1.414l.708-.708a1 1 0 011.414 0zM3 10a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zM5.78 5.78a1 1 0 010-1.414l.708-.708a1 1 0 111.414 1.414l-.708.708a1 1 0 01-1.414 0zM10 6a4 4 0 100 8 4 4 0 000-8z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
+                <button @click="open = ! open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-zinc-500 hover:text-gray-500 dark:hover:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors" aria-expanded="false" aria-controls="mobile-menu">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="h-6 w-6" :class="{'hidden': open, 'block': ! open }" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg class="h-6 w-6 hidden" :class="{'block': open, 'hidden': ! open }" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+</div>
+    <!-- Mobile menu -->
+    <div x-show="open" id="mobile-menu" class="sm:hidden border-t border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900" style="display: none;">
+        <div class="space-y-1 pb-3 pt-2">
+            <a href="http://localhost:8000" class="block border-l-4 py-2 pl-3 pr-4 text-base font-medium border-transparent text-gray-600 dark:text-zinc-400 hover:border-gray-300 dark:hover:border-zinc-600 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-gray-800 dark:hover:text-zinc-200">Home</a>
+            <a href="http://localhost:8000/movies" class="block border-l-4 py-2 pl-3 pr-4 text-base font-medium border-transparent text-gray-600 dark:text-zinc-400 hover:border-gray-300 dark:hover:border-zinc-600 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-gray-800 dark:hover:text-zinc-200">Movies</a>
+            <a href="http://localhost:8000/series" class="block border-l-4 py-2 pl-3 pr-4 text-base font-medium border-transparent text-gray-600 dark:text-zinc-400 hover:border-gray-300 dark:hover:border-zinc-600 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-gray-800 dark:hover:text-zinc-200">Series</a>
+            <a href="http://localhost:8000/anime" class="block border-l-4 py-2 pl-3 pr-4 text-base font-medium border-transparent text-gray-600 dark:text-zinc-400 hover:border-gray-300 dark:hover:border-zinc-600 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-gray-800 dark:hover:text-zinc-200">Anime</a>
+            <a href="http://localhost:8000/donghua" class="block border-l-4 py-2 pl-3 pr-4 text-base font-medium border-transparent text-gray-600 dark:text-zinc-400 hover:border-gray-300 dark:hover:border-zinc-600 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-gray-800 dark:hover:text-zinc-200">Donghua</a>
+        </div>
+        
+        <div class="border-t border-gray-200 dark:border-zinc-800 pb-4 pt-4">
+            <div class="px-4">
+                <form action="http://localhost:8000/search" method="GET" class="relative text-gray-400 focus-within:text-gray-600 dark:focus-within:text-zinc-300 flex">
+                    <input type="text" name="q" value="" class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-zinc-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:bg-zinc-800 sm:text-sm sm:leading-6" placeholder="Search...">
+                    <button type="submit" class="ml-2 inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900 transition-colors">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </button>
+                </form>
+            </div>
+            
+            <div class="mt-4 px-4 flex flex-col gap-2">
+                                    <div class="text-base font-medium text-gray-800 dark:text-white">Jo Windler</div>
+                    <div class="text-sm font-medium text-gray-500 dark:text-zinc-400">shawna94@example.org</div>
+                                        <a href="http://localhost:8000/profile" class="mt-3 text-gray-600 dark:text-zinc-300 font-medium hover:text-indigo-600">Profile</a>
+                    <form method="POST" action="http://localhost:8000/logout" class="mt-3">
+                        <input type="hidden" name="_token" value="RVOBcjQRFArSSDp8QEhIKEFCw2HV4xfiqMjPlUrA" autocomplete="off">                        <button type="submit" class="text-gray-600 dark:text-zinc-300 font-medium hover:text-indigo-600">Log Out</button>
+                    </form>
+                            </div>
+        </div>
+    </div>
+</nav>
+    <main class="flex-grow">
+        <div class="bg-black text-white min-h-[calc(100vh-4rem)] flex flex-col">
+    <div class="flex-grow flex flex-col lg:flex-row max-w-[1600px] w-full mx-auto"
+        x-data="playerData()" 
+        x-init="initPlayer()"
+    >
+        <!-- Main Player Area -->
+        <div class="flex-grow relative flex flex-col w-full" :class="{'lg:w-[70%] xl:w-[75%]': hasEpisodes}">
+            <!-- Player Container -->
+            <div class="relative w-full bg-black flex-grow flex items-center justify-center overflow-hidden aspect-video lg:aspect-auto" 
+                 @mousemove="showControls" 
+                 @mouseleave="hideControls"
+                 @keydown.window.space.prevent="togglePlay"
+                 @keydown.window.f.prevent="toggleFullscreen"
+                 @fullscreenchange="isFullscreen = !!document.fullscreenElement"
+                 x-ref="playerContainer"
+            >
+                                    <!-- Empty Source State -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900 z-10">
+                        <svg class="w-16 h-16 text-zinc-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <h3 class="text-xl font-medium text-white mb-2">Video Source Unavailable</h3>
+                        <p class="text-zinc-400 mb-6 text-center max-w-md">We're sorry, but the video source for this content is currently unavailable or broken.</p>
+                        <a href="http://localhost:8000/movies/libero-odit-pariatur-doloribus-ut-amet-et-aut" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded font-medium transition-colors">
+                            Return to Details
+                        </a>
+                    </div>
+                            </div>
+
+            <!-- Mobile Below-Player Details -->
+            <div class="lg:hidden p-4 bg-zinc-900 border-b border-zinc-800">
+                <h1 class="text-xl font-bold text-white">Tempore magni corrupti.</h1>
+                            </div>
+        </div>
+
+        <!-- Sidebar / Episodes List -->
+            </div>
+</div>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #52525b; }
+    .animate-ping-short { animation: ping-short 0.5s cubic-bezier(0, 0, 0.2, 1) forwards; }
+    @keyframes ping-short { 
+        0% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(1.5); opacity: 0; }
+    }
+</style>
+
+    </main>
+
+    <footer class="bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-800 mt-auto py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="md:flex md:items-center md:justify-between">
+            <div class="flex justify-center md:justify-start mb-6 md:mb-0">
+                <span class="text-xl font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">NontonKu</span>
+                <span class="ml-2 text-sm text-gray-500 dark:text-zinc-400 self-center">A modern streaming platform</span>
+            </div>
+            
+            <div class="flex flex-wrap justify-center space-x-6 text-sm text-gray-500 dark:text-zinc-400">
+                <a href="http://localhost:8000" class="hover:text-gray-900 dark:hover:text-white transition-colors">Home</a>
+                <a href="http://localhost:8000/movies" class="hover:text-gray-900 dark:hover:text-white transition-colors">Movies</a>
+                <a href="http://localhost:8000/series" class="hover:text-gray-900 dark:hover:text-white transition-colors">Series</a>
+                <a href="http://localhost:8000/anime" class="hover:text-gray-900 dark:hover:text-white transition-colors">Anime</a>
+            </div>
+        </div>
+        
+        <div class="mt-8 border-t border-gray-200 dark:border-zinc-800 pt-8 flex flex-col md:flex-row md:items-center md:justify-between">
+            <p class="mt-8 text-base text-gray-400 md:mt-0 text-center md:text-left">
+                &copy; 2026 NontonKu. All rights reserved.
+            </p>
+        </div>
+</div></footer>
+</body>
+</html>
