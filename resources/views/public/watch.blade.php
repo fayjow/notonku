@@ -32,13 +32,24 @@
                 @else
                     @if($activeSource->provider === 'embed')
                         <!-- Embed Iframe -->
-                        <div class="w-full h-full relative bg-black">
+                        {{-- <div class="w-full h-full relative bg-black">
                             <iframe 
                                 src="{{ $activeSource->url }}" 
                                 class="w-full h-full absolute inset-0 border-0" 
                                 allowfullscreen 
                                 allow="{{ $activeSource->supports_autoplay ? 'autoplay; ' : '' }}fullscreen"
                                 sandbox="allow-same-origin allow-scripts allow-presentation"
+                                @@load="isLoading = false"
+                                @@error="hasError = true"
+                            ></iframe>
+                        </div> --}}
+                        <!-- Embed Iframe -->
+                        <div class="w-full h-full relative bg-black">
+                            <iframe 
+                                src="{{ $activeSource->url }}" 
+                                class="w-full h-full absolute inset-0 border-0" 
+                                allow="{{ $activeSource->supports_autoplay ? 'autoplay; ' : '' }}encrypted-media; picture-in-picture; fullscreen"
+                                referrerpolicy="no-referrer-when-downgrade"
                                 @@load="isLoading = false"
                                 @@error="hasError = true"
                             ></iframe>
