@@ -1,30 +1,41 @@
 FROM php:8.3-fpm
 
-# Set noninteractive mode to avoid tzdata prompts
 ENV DEBIAN_FRONTEND=noninteractive
-
-# Install Node.js repository
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
+    ca-certificates \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
     zip \
     unzip \
-    nodejs
+    && rm -rf /var/lib/apt/lists/*
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install Node.js 20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install \
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd
 
-# Get latest Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# Working directory
 WORKDIR /var/www
+
+# Expose PHP-FPM port
+EXPOSE 9000
+
+CMD ["php-fpm"]

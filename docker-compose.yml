@@ -1,52 +1,85 @@
-version: '3.8'
 services:
+
   app:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+
     image: nontonku-app
     container_name: nontonku-app
     restart: unless-stopped
+
     working_dir: /var/www
+
     volumes:
       - ./:/var/www
+
+    depends_on:
+      db:
+        condition: service_healthy
+
     networks:
       - nontonku-network
+
 
   web:
     image: nginx:alpine
     container_name: nontonku-web
     restart: unless-stopped
+
     ports:
       - "8000:80"
+
     volumes:
       - ./:/var/www
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+
     depends_on:
       - app
+
     networks:
       - nontonku-network
+
 
   db:
     image: mysql:8.0
     container_name: nontonku-db
     restart: unless-stopped
+
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-secret}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
-      MYSQL_USER: ${DB_USERNAME:-root}
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
     volumes:
       - dbdata:/var/lib/mysql
-    ports:
-      - "3306:3306"
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p${DB_ROOT_PASSWORD}"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
     networks:
       - nontonku-network
+
 
 networks:
   nontonku-network:
     driver: bridge
+
 
 volumes:
   dbdata:
